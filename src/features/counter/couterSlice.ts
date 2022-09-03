@@ -14,9 +14,15 @@ export const couterSlice = createSlice({
     decrement: (state) => {
       state.count -= 1;
     },
+    reset: (state) => {
+        state.count = 0;
+    },
+    incrementByAmount: (state, action) => {
+        state.count += action.payload;
+    }
   },
 });
 
-export const { increment, decrement } = couterSlice.actions;
+export const { increment, decrement, reset, incrementByAmount } = couterSlice.actions;
 
 export default couterSlice.reducer;

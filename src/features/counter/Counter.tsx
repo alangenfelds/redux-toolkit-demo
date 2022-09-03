@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement } from "./couterSlice";
+import { increment, decrement, reset, incrementByAmount } from "./couterSlice";
 
 const Counter = () => {
   const count = useSelector(
@@ -8,12 +8,36 @@ const Counter = () => {
   );
   const dispatch = useDispatch();
 
+  const [incrementAmount, setIncrementAmount] = useState(0);
+
+  const addValue = Number(incrementAmount) || 0;
+
+  const resetAll = () => {
+    setIncrementAmount(0);
+    dispatch(reset());
+  };
+
   return (
     <section>
       <p>{count}</p>
       <div>
-        <button onClick={() => dispatch(increment())}>+</button>
-        <button onClick={() => dispatch(decrement())}>-</button>
+        <div>
+          <button onClick={() => dispatch(increment())}>+</button>
+          <button onClick={() => dispatch(decrement())}>-</button>
+        </div>
+        <div>
+          <button onClick={resetAll}>RESET</button>
+        </div>
+        <div>
+          <input
+            type="text"
+            value={incrementAmount}
+            onChange={(e) => setIncrementAmount(Number(e.target.value))}
+          />
+          <button onClick={() => dispatch(incrementByAmount(incrementAmount))}>
+            Increment by amount
+          </button>
+        </div>
       </div>
     </section>
   );
